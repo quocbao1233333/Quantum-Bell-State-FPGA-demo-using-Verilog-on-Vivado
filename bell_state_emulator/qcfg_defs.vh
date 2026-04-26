@@ -1,31 +1,11 @@
 `ifndef QCFG_DEFS_VH
 `define QCFG_DEFS_VH
-
-// ============================================================
-// qcfg_defs.vh
-// C?u hình dùng chung cho project bell_state_emulator
-// ??nh d?ng s? c? ??nh: signed Q2.14 trên 16 bit
-//
-// Giá tr? th?c = giá tr?_fixed / (2^QFRAC_W)
-//
-// Ví d?:
-//   1.0        -> 16384
-//   0.5        -> 8192
-//   1/sqrt(2)  -> 11585  (x?p x? 0.7070922852)
-// ============================================================
-
-// ------------------------------------------------------------
-// 1) C?u hình fixed-point t?ng quát
-// ------------------------------------------------------------
 `define QDATA_W        16
 `define QFRAC_W        14
 `define QINT_W         2
 `define QMSB           (`QDATA_W-1)
 `define QLSB           0
 
-// ------------------------------------------------------------
-// 2) Các h?ng s? fixed-point c? b?n (Q2.14)
-// ------------------------------------------------------------
 `define Q_ZERO         16'sd0
 `define Q_ONE          16'sd16384
 `define Q_NEG_ONE     (-16'sd16384)
@@ -46,9 +26,6 @@
 //
 // |0> : alpha = 1, beta = 0
 // |1> : alpha = 0, beta = 1
-//
-// T?t c? ph?n ?o ban ??u ??u b?ng 0
-// ------------------------------------------------------------
 `define Q1_KET0_ALPHA_RE   `Q_ONE
 `define Q1_KET0_ALPHA_IM   `Q_ZERO
 `define Q1_KET0_BETA_RE    `Q_ZERO
@@ -117,10 +94,7 @@
 `define Q2_KET11_A11_RE    `Q_ONE
 `define Q2_KET11_A11_IM    `Q_ZERO
 
-// ------------------------------------------------------------
-// 5) Tr?ng thái Bell m?c tiêu cho bài test chính
-// |Phi+> = (|00> + |11>) / sqrt(2)
-// ------------------------------------------------------------
+
 `define QBELL_PHI_PLUS_A00_RE   `Q_INV_SQRT2
 `define QBELL_PHI_PLUS_A00_IM   `Q_ZERO
 `define QBELL_PHI_PLUS_A01_RE   `Q_ZERO
@@ -129,20 +103,12 @@
 `define QBELL_PHI_PLUS_A10_IM   `Q_ZERO
 `define QBELL_PHI_PLUS_A11_RE   `Q_INV_SQRT2
 `define QBELL_PHI_PLUS_A11_IM   `Q_ZERO
-
-// ------------------------------------------------------------
-// 6) Macro h? tr? chuy?n ??i nhanh
-// ------------------------------------------------------------
-
 // Chuy?n s? nguyên sang fixed-point Q2.14
 `define Q_FROM_INT(x)      ((x) <<< `QFRAC_W)
 
 // Nhân 2 s? fixed-point r?i scale l?i v? Q2.14
 `define Q_MUL(a,b)         (((a) * (b)) >>> `QFRAC_W)
 
-// ------------------------------------------------------------
-// 7) Ng??ng sai s? nh? ?? ti?n ??i chi?u trong testbench
-// ------------------------------------------------------------
 `define Q_EPSILON          16'sd2
 
 `endif
